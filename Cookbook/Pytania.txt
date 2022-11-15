@@ -1,0 +1,8 @@
+﻿róznica pomiedzy Model a Entities
+róznica pomiedzy dto a services
+prezentacja/przechowywanie składników w gotowym daniu - lista czy kazda w osobnym
+czy przy składnikach oprócz ilosci ma być też jednostka miary
+
+zasilanie danych: plik, request
+
+składniki jako osobna tabela czy razem z daniem

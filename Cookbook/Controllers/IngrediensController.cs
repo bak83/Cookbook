@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Cookbook.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Cookbook.Controllers
 {
-	public class IngrediensController : Controller
+	[ApiController]
+	[Route("api/Ingrediens")]
+	public class IngrediensController : ControllerBase
 	{
 		private readonly DbCookBookContext _context;
 
@@ -11,10 +14,20 @@ namespace Cookbook.Controllers
 			_context = context;
 		}
 
-			public IActionResult Index()
+			public IActionResult Index(Ingredients ingredients)
 		{
-			//_context.Ingredients.Add
-			return View();
+			_context.Add(ingredients);
+			_context.SaveChanges();
+
+			return Ok();
 		}
+
+		[HttpGet]
+		public ActionResult<IEnumerable<Ingredients>> GetIngredients()
+		{
+			
+			return Ok();
+		}
+
 	}
 }
