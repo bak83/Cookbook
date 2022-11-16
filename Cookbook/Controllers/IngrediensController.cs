@@ -9,7 +9,7 @@ namespace Cookbook.Controllers
 	public class IngrediensController : ControllerBase
 	{
 		[HttpGet]
-		public ActionResult<IEnumerable<IngredientsDto>> GetIngredients(int dishId)
+		public ActionResult<IEnumerable<DishDto>> GetIngredients(int dishId)
 		{
 			var dish = DishesDataStore.Current.Dishes.FirstOrDefault(c => c.Id == dishId);
 
@@ -22,7 +22,7 @@ namespace Cookbook.Controllers
 		}
 
 		[HttpGet("{ingrediensname}")]
-		public ActionResult<IngredientsDto> GetIngredients(
+		public ActionResult<DishDto> GetIngredients(
 			int dishId, string ingrediensName)
 		{
 			var dish = DishesDataStore.Current.Dishes

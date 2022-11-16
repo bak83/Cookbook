@@ -4,15 +4,15 @@ namespace Cookbook
 {
 	public class DishesDataStore
 	{
-		public List<DishesDto> Dishes { get; set; }
+		public List<DishDto> Dishes { get; set; }
 		public static DishesDataStore Current { get; } = new DishesDataStore();
 
 		public DishesDataStore()
 		{
 			// init dummy data
-			Dishes = new List<DishesDto>()
+			Dishes = new List<DishDto>()
 			{
-				new DishesDto()
+				new DishDto()
 				{
 					 Id = 1,
 					 Name = "Cake",
@@ -38,7 +38,7 @@ namespace Cookbook
 							 Description = "1 cup" },
 					 }
 				},
-				new DishesDto()
+				new DishDto()
 				{
 					Id = 2,
 					Name = "Toast",
@@ -54,7 +54,7 @@ namespace Cookbook
 							 Description = "Slice" },
 					 }
 				},
-				new DishesDto()
+				new DishDto()
 				{
 					Id= 3,
 					Name = "Cacao",
