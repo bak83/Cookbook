@@ -1,32 +1,46 @@
-﻿using Cookbook.Entities;
+﻿
+using Cookbook.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cookbook.Controllers
 {
 	[ApiController]
-	[Route("api/Ingrediens")]
+	[Route("api/dishes/{dishId}/ingrediens")]
 	public class IngrediensController : ControllerBase
 	{
-		private readonly DbCookBookContext _context;
-
-		public IngrediensController(DbCookBookContext context)
-		{
-			_context = context;
-		}
-
-			public IActionResult Index(Ingredients ingredients)
-		{
-			_context.Add(ingredients);
-			_context.SaveChanges();
-
-			return Ok();
-		}
-
 		[HttpGet]
-		public ActionResult<IEnumerable<Ingredients>> GetIngredients()
+		public ActionResult<IEnumerable<IngredientsDto>> GetIngredients(int dishId)
 		{
-			
-			return Ok();
+			var dish = DishesDataStore.Current.Dishes.FirstOrDefault(c => c.Id == dishId);
+
+			if (dish == null)
+			{
+				return NotFound();
+			}
+
+			return Ok(dish.Ingredients);
+		}
+
+		[HttpGet("{ingrediensname}")]
+		public ActionResult<IngredientsDto> GetIngredients(
+			int dishId, string ingrediensName)
+		{
+			var dish = DishesDataStore.Current.Dishes
+				.FirstOrDefault(c => c.Id == dishId);
+			if (dish == null)
+			{
+				return NotFound();
+			}
+
+			// find point of interest
+			var ingredients = dish.Ingredients
+				.FirstOrDefault(c => c.Name == ingrediensName);
+			if (ingredients == null)
+			{
+				return NotFound();
+			}
+
+			return Ok(ingredients);
 		}
 
 	}

@@ -1,12 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Cookbook.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Cookbook.Controllers
 {
-	public class DishesController : Controller
+	[ApiController]
+	[Route("api/dishes")]
+	public class DishesController : ControllerBase
 	{
-		public IActionResult Index()
+		[HttpGet]
+		public ActionResult<IEnumerable<DishesDto>> GetDishes()
 		{
-			return View();
+			return Ok(DishesDataStore.Current.Dishes);
+		}
+
+		[HttpGet("{id}")]
+		public ActionResult<DishesDto> GetDishes(int id)
+		{
+			
+			var dish = DishesDataStore.Current.Dishes
+				.FirstOrDefault(c => c.Id == id);
+
+			if (dish == null)
+			{
+				return NotFound();
+			}
+
+			return Ok(dish);
 		}
 	}
 }
