@@ -43,8 +43,55 @@ namespace Cookbook.Controllers
 				Ingredients = dishAdd.Ingredients
 			};
 
+			DishesDataStore.Current.Dishes.Add(newDish);			
+
+			return Ok();
+		}
+
+		[HttpPost("join")]
+		public ActionResult<DishDto> JoinDishes(JoinDishDto joinDishes)
+		{
+
+			var maxDishId = DishesDataStore.Current.Dishes.Max(p => p.Id);
+			var existsDishes = new List<DishDto>();
+
+			foreach (var dish in joinDishes.ListOfDishes)
+			{
+				existsDishes.Add(DishesDataStore.Current.Dishes.FirstOrDefault(c => c.Id == dish));
+
+			}
+
+			var Ingredients = new List<IngredientsDto>();
+			string elem = null;
+
+			foreach (var dish in existsDishes)
+			{
+				foreach (var ingredient in dish.Ingredients)
+				{
+					elem += ingredient.Name;
+				}	
+				Ingredients.Add(
+					new IngredientsDto
+					{
+						Name = dish.Name,
+						//Description = dish.Ingredients.ToString() //string.Join(",", list.ToArray())
+						Description = elem,
+
+					}
+					);
+			}	
+
+			var newDish = new DishDto()
+			{
+				Id = ++maxDishId,
+				Name = joinDishes.Name,
+				KindOfDiet = joinDishes.KindOfDiet,
+				KindOfDishes = joinDishes.KindOfDishes,
+				Ingredients = Ingredients
+			};
+
 			DishesDataStore.Current.Dishes.Add(newDish);
-			
+
 
 			return Ok();
 		}
