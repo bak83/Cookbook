@@ -1,9 +1,12 @@
-﻿namespace Cookbook.Models
+﻿using Cookbook.Entities;
+
+namespace Cookbook.Models
 {
 	public class DishDto
 	{
-		public int Id { get; set; }
-		public string Name { get; set; } = string.Empty;
+		//public int Id { get; set; }
+		//public string Name { get; set; } = string.Empty;
+		public Dishes dishes { get; set; } = new Dishes();
 		public int NumberOfIngredients
 		{
 			get

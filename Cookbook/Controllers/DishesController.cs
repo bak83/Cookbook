@@ -1,5 +1,7 @@
-﻿using Cookbook.Models;
+﻿using Cookbook.Entities;
+using Cookbook.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 
 namespace Cookbook.Controllers
 {
@@ -18,7 +20,7 @@ namespace Cookbook.Controllers
 		{
 			
 			var dish = DishesDataStore.Current.Dishes
-				.FirstOrDefault(c => c.Id == id);
+				.FirstOrDefault(c => c.dishes.Id == id);
 
 			if (dish == null)
 			{
@@ -32,12 +34,15 @@ namespace Cookbook.Controllers
 		public ActionResult<DishDto> AddNewDish(DishAddDto dishAdd)
 		{
 			
-			var maxDishId = DishesDataStore.Current.Dishes.Max(p => p.Id);
+			var maxDishId = DishesDataStore.Current.Dishes.Max(p => p.dishes.Id);
 			
 			var newDish = new DishDto()
 			{
-				Id = ++maxDishId,
-				Name = dishAdd.Name,
+				dishes = new Dishes()
+				{
+					Id = ++maxDishId,
+					Name = dishAdd.Name
+				},
 				KindOfDiet = dishAdd.KindOfDiet,
 				KindOfDishes = dishAdd.KindOfDishes,
 				Ingredients = dishAdd.Ingredients
@@ -52,12 +57,12 @@ namespace Cookbook.Controllers
 		public ActionResult<DishDto> JoinDishes(JoinDishDto joinDishes)
 		{
 
-			var maxDishId = DishesDataStore.Current.Dishes.Max(p => p.Id);
+			var maxDishId = DishesDataStore.Current.Dishes.Max(p => p.dishes.Id);
 			var existsDishes = new List<DishDto>();
 
 			foreach (var dish in joinDishes.ListOfDishes)
 			{
-				existsDishes.Add(DishesDataStore.Current.Dishes.FirstOrDefault(c => c.Id == dish));
+				existsDishes.Add(DishesDataStore.Current.Dishes.FirstOrDefault(c => c.dishes.Id == dish));
 
 			}
 
@@ -68,23 +73,27 @@ namespace Cookbook.Controllers
 			{
 				foreach (var ingredient in dish.Ingredients)
 				{
-					elem += ingredient.Name;
+					elem += ingredient.ingredients.Name;
 				}	
 				Ingredients.Add(
 					new IngredientsDto
 					{
-						Name = dish.Name,
-						//Description = dish.Ingredients.ToString() //string.Join(",", list.ToArray())
-						Description = elem,
-
+						ingredients = new Ingredients()
+						{
+							Name = dish.dishes.Name,
+							//Description = dish.Ingredients.ToString() //string.Join(",", list.ToArray())
+							Description = elem,
+						}
 					}
 					);
 			}	
 
 			var newDish = new DishDto()
 			{
+				dishes = new Dishes()
+				{
 				Id = ++maxDishId,
-				Name = joinDishes.Name,
+				Name = joinDishes.Name },
 				KindOfDiet = joinDishes.KindOfDiet,
 				KindOfDishes = joinDishes.KindOfDishes,
 				Ingredients = Ingredients

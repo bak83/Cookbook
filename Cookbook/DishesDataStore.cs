@@ -1,4 +1,5 @@
-﻿using Cookbook.Models;
+﻿using Cookbook.Entities;
+using Cookbook.Models;
 
 namespace Cookbook
 {
@@ -9,13 +10,16 @@ namespace Cookbook
 
 		public DishesDataStore()
 		{
-			// init dummy data
+
 			Dishes = new List<DishDto>()
 			{
 				new DishDto()
 				{
+					 dishes = new Entities.Dishes()
+					 {
 					 Id = 1,
-					 Name = "Cake",
+					 Name = "Cake"
+					 },
 					 KindOfDiet = new KindOfDietDto()
 					 {
 						 //Id = 1,
@@ -28,46 +32,61 @@ namespace Cookbook
 					 },
 					 Ingredients = new List<IngredientsDto>()
 					 {
+
 						 new IngredientsDto() {
-							 //Id = 1,
-							 Name = "Flower",
-							 Description = "1 cup" },
+							 ingredients = new Ingredients()
+							 { Name = "Flower",
+							 Description = "1 cup" } },
 						  new IngredientsDto() {
-							 //Id = 2,
-							 Name = "Water",
-							 Description = "1 cup" },
+							 ingredients =  new Entities.Ingredients()
+							 {Name = "Water",
+							 Description = "1 cup" } },
 					 }
 				},
 				new DishDto()
 				{
-					Id = 2,
-					Name = "Toast",
+					dishes = new Entities.Dishes()
+					 {
+					 Id = 2,
+					 Name = "Toast"
+					 },
 					Ingredients = new List<IngredientsDto>()
 					 {
 						 new IngredientsDto() {
-							 //Id = 3,
-							 Name = "Bread",
-							 Description = "Slice" },
+							 ingredients =  new Ingredients()
+							 {Name = "Bread",
+							 Description = "Slice" } },
 						  new IngredientsDto() {
-							 //Id = 4,
-							 Name = "Chees",
-							 Description = "Slice" },
+							 ingredients =  new Ingredients()
+							 {Name = "Chees",
+							 Description = "Slice" } },
 					 }
 				},
 				new DishDto()
 				{
-					Id= 3,
-					Name = "Cacao",
+					dishes = new Entities.Dishes()
+					 {
+					 Id = 3,
+					 Name = "Cacao"
+					 },
 					Ingredients = new List<IngredientsDto>()
 					 {
-						 new IngredientsDto() {
-							 //Id = 5,
-							 Name = "Milk",
-							 Description = "1 cup" },
-						  new IngredientsDto() {
-							 //Id = 6,
-							 Name = "Cacao",
-							 Description = "1 tbs" },
+						 new IngredientsDto() 
+						 {
+						ingredients = new Ingredients()
+							 {
+								Name = "Milk",
+								Description = "1 cup"
+							 } 
+						 },
+						  new IngredientsDto() 
+						  {
+							ingredients = new Ingredients()
+							 {
+								Name = "Cacao",
+								Description = "1 tbs"
+							 } 
+						  },
 					 }
 				}
 			};
