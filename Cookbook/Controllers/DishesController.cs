@@ -1,7 +1,7 @@
-﻿using Cookbook.Entities;
+﻿using AutoMapper;
 using Cookbook.Models;
+using Cookbook.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq.Expressions;
 
 namespace Cookbook.Controllers
 {
@@ -9,18 +9,27 @@ namespace Cookbook.Controllers
 	[Route("api/dishes")]
 	public class DishesController : ControllerBase
 	{
+		private readonly IDishRepositiry _dishRepositiry;
+		private readonly IMapper _mapper;
+
+		public DishesController(IDishRepositiry dishRepositiry, IMapper mapper)
+		{
+			_dishRepositiry = dishRepositiry ??
+				throw new ArgumentNullException(nameof(dishRepositiry));
+			_mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+		}
 		[HttpGet]
 		public ActionResult<IEnumerable<DishDto>> GetDishes()
 		{
-			return Ok(DishesDataStore.Current.Dishes);
+			var dishesList = _dishRepositiry.GetDishes();
+			return Ok(dishesList);
 		}
 
 		[HttpGet("{id}")]
-		public ActionResult<DishDto> GetDishes(int id)
+		public ActionResult<DishDto> GetDish(int id)
 		{
-			
-			var dish = DishesDataStore.Current.Dishes
-				.FirstOrDefault(c => c.dishes.Id == id);
+
+			var dish = _dishRepositiry.GetDish(id);
 
 			if (dish == null)
 			{
@@ -33,22 +42,8 @@ namespace Cookbook.Controllers
 		[HttpPost]
 		public ActionResult<DishDto> AddNewDish(DishAddDto dishAdd)
 		{
-			
-			var maxDishId = DishesDataStore.Current.Dishes.Max(p => p.dishes.Id);
-			
-			var newDish = new DishDto()
-			{
-				dishes = new Dishes()
-				{
-					Id = ++maxDishId,
-					Name = dishAdd.Name
-				},
-				KindOfDiet = dishAdd.KindOfDiet,
-				KindOfDishes = dishAdd.KindOfDishes,
-				Ingredients = dishAdd.Ingredients
-			};
 
-			DishesDataStore.Current.Dishes.Add(newDish);			
+			_dishRepositiry.AddNewDish(dishAdd);
 
 			return Ok();
 		}
@@ -57,51 +52,7 @@ namespace Cookbook.Controllers
 		public ActionResult<DishDto> JoinDishes(JoinDishDto joinDishes)
 		{
 
-			var maxDishId = DishesDataStore.Current.Dishes.Max(p => p.dishes.Id);
-			var existsDishes = new List<DishDto>();
-
-			foreach (var dish in joinDishes.ListOfDishes)
-			{
-				existsDishes.Add(DishesDataStore.Current.Dishes.FirstOrDefault(c => c.dishes.Id == dish));
-
-			}
-
-			var Ingredients = new List<IngredientsDto>();
-			string elem = null;
-
-			foreach (var dish in existsDishes)
-			{
-				foreach (var ingredient in dish.Ingredients)
-				{
-					elem += ingredient.ingredients.Name;
-				}	
-				Ingredients.Add(
-					new IngredientsDto
-					{
-						ingredients = new Ingredients()
-						{
-							Name = dish.dishes.Name,
-							//Description = dish.Ingredients.ToString() //string.Join(",", list.ToArray())
-							Description = elem,
-						}
-					}
-					);
-			}	
-
-			var newDish = new DishDto()
-			{
-				dishes = new Dishes()
-				{
-				Id = ++maxDishId,
-				Name = joinDishes.Name },
-				KindOfDiet = joinDishes.KindOfDiet,
-				KindOfDishes = joinDishes.KindOfDishes,
-				Ingredients = Ingredients
-			};
-
-			DishesDataStore.Current.Dishes.Add(newDish);
-
-
+			_dishRepositiry.JoinDishes(joinDishes);
 			return Ok();
 		}
 

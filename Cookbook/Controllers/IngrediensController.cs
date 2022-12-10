@@ -11,7 +11,7 @@ namespace Cookbook.Controllers
 		[HttpGet]
 		public ActionResult<IEnumerable<DishDto>> GetIngredients(int dishId)
 		{
-			var dish = DishesDataStore.Current.Dishes.FirstOrDefault(c => c.dishes.Id == dishId);
+			var dish = DishesDataStore.Current.Dishes.FirstOrDefault(c => c.Id == dishId);
 
 			if (dish == null)
 			{
@@ -26,7 +26,7 @@ namespace Cookbook.Controllers
 			int dishId, string ingrediensName)
 		{
 			var dish = DishesDataStore.Current.Dishes
-				.FirstOrDefault(c => c.dishes.Id == dishId);
+				.FirstOrDefault(c => c.Id == dishId);
 			if (dish == null)
 			{
 				return NotFound();
@@ -34,7 +34,7 @@ namespace Cookbook.Controllers
 
 
 			var ingredients = dish.Ingredients
-				.FirstOrDefault(c => c.ingredients.Name == ingrediensName);
+				.FirstOrDefault(c => c.Name == ingrediensName);
 			if (ingredients == null)
 			{
 				return NotFound();

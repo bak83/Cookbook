@@ -15,11 +15,9 @@ namespace Cookbook
 			{
 				new DishDto()
 				{
-					 dishes = new Entities.Dishes()
-					 {
+
 					 Id = 1,
-					 Name = "Cake"
-					 },
+					 Name = "Cake",
 					 KindOfDiet = new KindOfDietDto()
 					 {
 						 //Id = 1,
@@ -33,59 +31,52 @@ namespace Cookbook
 					 Ingredients = new List<IngredientsDto>()
 					 {
 
-						 new IngredientsDto() {
-							 ingredients = new Ingredients()
-							 { Name = "Flower",
-							 Description = "1 cup" } },
-						  new IngredientsDto() {
-							 ingredients =  new Entities.Ingredients()
-							 {Name = "Water",
-							 Description = "1 cup" } },
+						 new IngredientsDto()
+						 {
+							 Name = "Flower",
+							 Description = "1 cup"
+						 },
+						 new IngredientsDto()
+						 {
+							  Name = "Water",
+							 Description = "1 cup"
+						 }
 					 }
 				},
 				new DishDto()
 				{
-					dishes = new Entities.Dishes()
-					 {
 					 Id = 2,
-					 Name = "Toast"
-					 },
-					Ingredients = new List<IngredientsDto>()
-					 {
-						 new IngredientsDto() {
-							 ingredients =  new Ingredients()
-							 {Name = "Bread",
-							 Description = "Slice" } },
-						  new IngredientsDto() {
-							 ingredients =  new Ingredients()
-							 {Name = "Chees",
-							 Description = "Slice" } },
-					 }
-				},
-				new DishDto()
-				{
-					dishes = new Entities.Dishes()
-					 {
-					 Id = 3,
-					 Name = "Cacao"
-					 },
+					 Name = "Toast",
 					Ingredients = new List<IngredientsDto>()
 					 {
 						 new IngredientsDto() 
 						 {
-						ingredients = new Ingredients()
-							 {
-								Name = "Milk",
-								Description = "1 cup"
-							 } 
+							 Name = "Bread",
+							 Description = "Slice" 
 						 },
-						  new IngredientsDto() 
+						 new IngredientsDto() 
+						 {
+							 Name = "Chees",
+							 Description = "Slice" 
+						 }
+					 }
+				},
+				new DishDto()
+				{
+
+					 Id = 3,
+					 Name = "Cacao",
+					Ingredients = new List<IngredientsDto>()
+					 {
+						 new IngredientsDto()
+						 {
+							Name = "Milk",
+							Description = "1 cup"							 
+						 },
+						  new IngredientsDto()
 						  {
-							ingredients = new Ingredients()
-							 {
-								Name = "Cacao",
-								Description = "1 tbs"
-							 } 
+							Name = "Cacao",
+							Description = "1 tbs"							 
 						  },
 					 }
 				}
