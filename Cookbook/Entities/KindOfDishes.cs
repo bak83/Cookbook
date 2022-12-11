@@ -5,7 +5,7 @@ namespace Cookbook.Entities
 {
 
 	
-	public class KindOfdishes
+	public class KindOfDishes
 	{
 		public string? KindOfDish { get; set; }
 	}

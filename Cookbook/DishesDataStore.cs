@@ -1,79 +1,78 @@
 ﻿using Cookbook.Entities;
-using Cookbook.Models;
 
 namespace Cookbook
 {
 	public class DishesDataStore
 	{
-		public List<DishDto> Dishes { get; set; }
+		public List<Dishes> Dishes { get; set; }
 		public static DishesDataStore Current { get; } = new DishesDataStore();
 
 		public DishesDataStore()
 		{
 
-			Dishes = new List<DishDto>()
+			Dishes = new List<Dishes>()
 			{
-				new DishDto()
+				new Dishes()
 				{
 
 					 Id = 1,
 					 Name = "Cake",
-					 KindOfDiet = new KindOfDietDto()
+					 KindOfDiet = new KindOfDiet()
 					 {
 						 //Id = 1,
-						 KindOfDiet = "vege"
+						 kindOfDiet = "vege"
 					 },
-					 KindOfDishes = new KindOfDishesDto()
+					 KindOfDishes = new KindOfDishes()
 					 {
 						 //Id = 1,
 						 KindOfDish = "dessert"
 					 },
-					 Ingredients = new List<IngredientsDto>()
+					 Ingredients = new List<Ingredients>()
 					 {
 
-						 new IngredientsDto()
+						 new Ingredients()
 						 {
 							 Name = "Flower",
 							 Description = "1 cup"
 						 },
-						 new IngredientsDto()
+						 new Ingredients()
 						 {
 							  Name = "Water",
 							 Description = "1 cup"
 						 }
 					 }
 				},
-				new DishDto()
+				new Dishes()
 				{
 					 Id = 2,
 					 Name = "Toast",
-					Ingredients = new List<IngredientsDto>()
+					Ingredients = new List<Ingredients>()
 					 {
-						 new IngredientsDto() 
+						 new Ingredients() 
 						 {
 							 Name = "Bread",
 							 Description = "Slice" 
 						 },
-						 new IngredientsDto() 
+						 new Ingredients() 
 						 {
 							 Name = "Chees",
 							 Description = "Slice" 
 						 }
 					 }
 				},
-				new DishDto()
+				new Dishes()
 				{
 
 					 Id = 3,
 					 Name = "Cacao",
-					Ingredients = new List<IngredientsDto>()
+					Ingredients = new List<Ingredients>()
 					 {
-						 new IngredientsDto()
+						 new Ingredients()
 						 {
 							Name = "Milk",
 							Description = "1 cup"							 
 						 },
-						  new IngredientsDto()
+						  new Ingredients()
 						  {
 							Name = "Cacao",
 							Description = "1 tbs"							 

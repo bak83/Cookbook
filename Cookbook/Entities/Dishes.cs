@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Cookbook.Models;
 
 namespace Cookbook.Entities
 {
@@ -19,11 +20,10 @@ namespace Cookbook.Entities
 		}
 
 		public KindOfDiet KindOfDiet { get; set; } = new KindOfDiet();
-		public KindOfdishes KindOfDishes { get; set; } = new KindOfdishes();
+		public KindOfDishes KindOfDishes { get; set; } = new KindOfDishes();
 
 		public ICollection<Ingredients> Ingredients { get; set; }
 			= new List<Ingredients>();
-
 
 	}
 }

@@ -3,6 +3,6 @@
 	public class KindOfDietDto
 	{
 		//public int Id { get; set; }
-		public string KindOfDiet { get; set; }
+		public string kindOfDiet { get; set; }
 	}
 }

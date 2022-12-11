@@ -22,7 +22,8 @@ namespace Cookbook.Controllers
 		public ActionResult<IEnumerable<DishDto>> GetDishes()
 		{
 			var dishesList = _dishRepositiry.GetDishes();
-			return Ok(dishesList);
+			
+			return Ok(_mapper.Map<IEnumerable<DishDto>>(dishesList));
 		}
 
 		[HttpGet("{id}")]
@@ -39,22 +40,22 @@ namespace Cookbook.Controllers
 			return Ok(dish);
 		}
 
-		[HttpPost]
-		public ActionResult<DishDto> AddNewDish(DishAddDto dishAdd)
-		{
+		//[HttpPost]
+		//public ActionResult<DishDto> AddNewDish(DishAddDto dishAdd)
+		//{
 
-			_dishRepositiry.AddNewDish(dishAdd);
+		//	_dishRepositiry.AddNewDish(dishAdd);
 
-			return Ok();
-		}
+		//	return Ok();
+		//}
 
-		[HttpPost("join")]
-		public ActionResult<DishDto> JoinDishes(JoinDishDto joinDishes)
-		{
+		//[HttpPost("join")]
+		//public ActionResult<DishDto> JoinDishes(JoinDishDto joinDishes)
+		//{
 
-			_dishRepositiry.JoinDishes(joinDishes);
-			return Ok();
-		}
+		//	_dishRepositiry.JoinDishes(joinDishes);
+		//	return Ok();
+		//}
 
 	}
 }
