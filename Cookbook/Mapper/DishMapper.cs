@@ -7,8 +7,7 @@ namespace Cookbook.Mapper
 		public DishMapper()
 		{
 			CreateMap<Entities.Dishes, Models.DishDto>();
-			CreateMap<Models.DishDto, Entities.Dishes>();
-			CreateMap<Models.DishDto, Models.DishDto>();
+			CreateMap<Models.DishDto, Entities.Dishes>();			
 			CreateMap<Entities.Ingredients, Models.IngredientsDto>();
 			CreateMap<Entities.KindOfDiet, Models.KindOfDietDto>();
 			CreateMap<Entities.KindOfDishes, Models.KindOfDishesDto>();

@@ -6,12 +6,12 @@ namespace Cookbook.Services
 {
 	public class DishRepositiry : IDishRepositiry
 	{
-		public ActionResult<IEnumerable<Dishes>> GetDishes()
+		public IEnumerable<Dishes> GetDishes()
 		{
 			return DishesDataStore.Current.Dishes;
 		}
 
-		public ActionResult<Dishes> GetDish(int id)
+		public Dishes GetDish(int id)
 		{
 
 			var dish = DishesDataStore.Current.Dishes

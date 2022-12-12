@@ -7,8 +7,8 @@ namespace Cookbook.Services
 	public interface IDishRepositiry
 	{
 		//void AddNewDish(Dishes dishAdd);
-		ActionResult<Dishes> GetDish(int id);
-		ActionResult<IEnumerable<Dishes>> GetDishes();
+		Dishes GetDish(int id);
+		IEnumerable<Dishes> GetDishes();
 		//void JoinDishes(IEnumerable<Dishes> joinDishes);
 	}
 }

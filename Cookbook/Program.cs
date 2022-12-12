@@ -1,9 +1,10 @@
 using Cookbook;
+using Cookbook.Mapper;
 using Cookbook.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(typeof(DishMapper));
 
 builder.Services.AddTransient<IDishRepositiry, DishRepositiry>();
 builder.Services.AddControllers();
