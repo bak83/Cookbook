@@ -2,7 +2,6 @@
 {
 	public class JoinDishDto
 	{
-		public int Id { get; set; }
 		public string Name { get; set; } = string.Empty;
 
 		public KindOfDietDto KindOfDiet { get; set; } = new KindOfDietDto();
@@ -10,6 +9,9 @@
 
 		public ICollection<int> ListOfDishes { get; set; } = new List<int>();
 
-		
+		public ICollection<IngredientsDto> Ingredients { get; set; }
+			= new List<IngredientsDto>();
+
+
 	}
 }

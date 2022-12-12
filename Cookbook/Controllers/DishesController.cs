@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Cookbook.Entities;
 using Cookbook.Models;
 using Cookbook.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace Cookbook.Controllers
 {
@@ -49,13 +51,17 @@ namespace Cookbook.Controllers
 			return Ok();
 		}
 
-		//[HttpPost("join")]
-		//public ActionResult<DishDto> JoinDishes(JoinDishDto joinDishes)
-		//{
-
-		//	_dishRepositiry.JoinDishes(joinDishes);
-		//	return Ok();
-		//}
+		[HttpPost("join")]
+		public ActionResult<DishDto> JoinDishes(JoinDishDto joinDishes)
+		{
+			var joinDish = joinDishes.ListOfDishes;
+			var Name = joinDishes.Name;
+			var kindOfDiet = _mapper.Map<Entities.KindOfDiet>(joinDishes.KindOfDiet);
+			var kindOfDishes = _mapper.Map<Entities.KindOfDishes>(joinDishes.KindOfDishes);
+			var igredients = _mapper.Map<IEnumerable<Entities.Ingredients>>(joinDishes.Ingredients);
+			_dishRepositiry.JoinDishes(joinDish, Name, kindOfDiet, kindOfDishes, igredients);
+			return Ok();
+		}
 
 	}
 }

@@ -1,6 +1,5 @@
 ﻿//using Cookbook.Models;
 using Cookbook.Entities;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Cookbook.Services
 {
@@ -37,47 +36,52 @@ namespace Cookbook.Services
 			DishesDataStore.Current.Dishes.Add(newDish);
 		}
 
-		//public void JoinDishes(IEnumerable<Dishes> joinDishes)
-		//{
+		public void JoinDishes(IEnumerable<int> joinDishes, string Name, KindOfDiet kindOfDiet, KindOfDishes kindOfDishes, IEnumerable<Ingredients> ingredients = null)
+		{
+			var existsDishes = DishesDataStore.Current.Dishes;
+			var maxDishId = existsDishes.Max(p => p.Id);
+			var existsDishesList = new List<Dishes>();
 
-		//	var maxDishId = DishesDataStore.Current.Dishes.Max(p => p.Id);
-		//	var existsDishes = new List<DishDto>();
+			foreach (var dish in joinDishes)
+			{
+				existsDishesList.Add(DishesDataStore.Current.Dishes.FirstOrDefault(c => c.Id == dish));
 
-		//	foreach (var dish in joinDishes.ListOfDishes)
-		//	{
-		//		existsDishes.Add(DishesDataStore.Current.Dishes.FirstOrDefault(c => c.Id == dish));
+			}
 
-		//	}
+			var Ingredients = new List<Ingredients>();
+			string elem = null;
 
-		//	var Ingredients = new List<IngredientsDto>();
-		//	string elem = null;
+			foreach (var dish in existsDishesList)
+			{
+				foreach (var ingredient in dish.Ingredients)
+				{
+					elem += ingredient.Name;
+				}
+				Ingredients.Add
+					(
+					new Ingredients
+					{
+						Name = dish.Name,
+						Description = elem
+					}
+					);
+				elem = null;
+			}
+			if (ingredients != null)
+			{
+				Ingredients.AddRange(ingredients);
+			}
+			var newDish = new Dishes()
+			{
 
-		//	foreach (var dish in existsDishes)
-		//	{
-		//		foreach (var ingredient in dish.Ingredients)
-		//		{
-		//			elem += ingredient.Name;
-		//		}
-		//		Ingredients.Add(
-		//			new IngredientsDto
-		//			{
-		//				Name = dish.Name,
-		//				Description = elem
-		//			}
-		//			);
-		//	}
+				Id = ++maxDishId,
+				Name = Name,
+				KindOfDiet = kindOfDiet,
+				KindOfDishes = kindOfDishes,
+				Ingredients = Ingredients
+			};
 
-		//	var newDish = new DishDto()
-		//	{
-
-		//		Id = ++maxDishId,
-		//		Name = joinDishes.Name,
-		//		KindOfDiet = joinDishes.KindOfDiet,
-		//		KindOfDishes = joinDishes.KindOfDishes,
-		//		Ingredients = Ingredients
-		//	};
-
-		//	DishesDataStore.Current.Dishes.Add(newDish);			
-		//}
+			DishesDataStore.Current.Dishes.Add(newDish);
+		}
 	}
 }

@@ -10,6 +10,6 @@ namespace Cookbook.Services
 		void AddNewDish(Dishes dishAdd);
 		Dishes GetDish(int id);
 		IEnumerable<Dishes> GetDishes();
-		//void JoinDishes(IEnumerable<Dishes> joinDishes);
+		void JoinDishes(IEnumerable<int> joinDishes, string Name, KindOfDiet kindOfDiet, KindOfDishes kindOfDishes, IEnumerable<Ingredients> ingredients = null);
 	}
 }

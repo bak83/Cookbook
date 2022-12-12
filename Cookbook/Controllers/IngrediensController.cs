@@ -1,5 +1,7 @@
 ﻿
+using AutoMapper;
 using Cookbook.Models;
+using Cookbook.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cookbook.Controllers
@@ -8,40 +10,29 @@ namespace Cookbook.Controllers
 	[Route("api/dishes/{dishId}/ingrediens")]
 	public class IngrediensController : ControllerBase
 	{
+		private readonly IDishRepositiry _dishRepositiry;
+		private readonly IMapper _mapper;
+
+		public IngrediensController(IDishRepositiry dishRepositiry, IMapper mapper)
+		{
+			_dishRepositiry = dishRepositiry ??
+				throw new ArgumentNullException(nameof(dishRepositiry));
+			_mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+		}
+
 		[HttpGet]
 		public ActionResult<IEnumerable<DishDto>> GetIngredients(int dishId)
 		{
-			var dish = DishesDataStore.Current.Dishes.FirstOrDefault(c => c.Id == dishId);
-
+			var dish = _dishRepositiry.GetDish(dishId);
 			if (dish == null)
 			{
 				return NotFound();
 			}
-
-			return Ok(dish.Ingredients);
+			
+			return Ok(_mapper.Map<IEnumerable<IngredientsDto>>(dish.Ingredients));
 		}
 
-		[HttpGet("{ingrediensname}")]
-		public ActionResult<DishDto> GetIngredients(
-			int dishId, string ingrediensName)
-		{
-			var dish = DishesDataStore.Current.Dishes
-				.FirstOrDefault(c => c.Id == dishId);
-			if (dish == null)
-			{
-				return NotFound();
-			}
-
-
-			var ingredients = dish.Ingredients
-				.FirstOrDefault(c => c.Name == ingrediensName);
-			if (ingredients == null)
-			{
-				return NotFound();
-			}
-
-			return Ok(ingredients);
-		}
+		
 
 	}
 }
