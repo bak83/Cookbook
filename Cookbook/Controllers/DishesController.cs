@@ -37,17 +37,17 @@ namespace Cookbook.Controllers
 				return NotFound();
 			}
 
-			return Ok(dish);
+			return Ok(_mapper.Map<DishDto>(dish));
 		}
 
-		//[HttpPost]
-		//public ActionResult<DishDto> AddNewDish(DishAddDto dishAdd)
-		//{
+		[HttpPost]
+		public ActionResult<DishDto> AddNewDish(DishAddDto dishAdd)
+		{
+			var result = _mapper.Map<Entities.Dishes>(dishAdd);
+			_dishRepositiry.AddNewDish(result);
 
-		//	_dishRepositiry.AddNewDish(dishAdd);
-
-		//	return Ok();
-		//}
+			return Ok();
+		}
 
 		//[HttpPost("join")]
 		//public ActionResult<DishDto> JoinDishes(JoinDishDto joinDishes)

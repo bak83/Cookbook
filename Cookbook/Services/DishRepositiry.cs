@@ -20,22 +20,22 @@ namespace Cookbook.Services
 			return dish;
 		}
 
-		//public void AddNewDish(Dishes dishAdd)
-		//{
+		public void AddNewDish(Dishes dishAdd)
+		{
 
-		//	var maxDishId = DishesDataStore.Current.Dishes.Max(p => p.Id);
+			var maxDishId = DishesDataStore.Current.Dishes.Max(p => p.Id);
 
-		//	var newDish = new Dishes()
-		//	{
-		//		Id = ++maxDishId,
-		//		Name = dishAdd.Name,
-		//		KindOfDiet = dishAdd.KindOfDiet,
-		//		KindOfDishes = dishAdd.KindOfDishes,
-		//		Ingredients = dishAdd.Ingredients
-		//	};
+			var newDish = new Dishes()
+			{
+				Id = ++maxDishId,
+				Name = dishAdd.Name,
+				KindOfDiet = dishAdd.KindOfDiet,
+				KindOfDishes = dishAdd.KindOfDishes,
+				Ingredients = dishAdd.Ingredients
+			};
 
-		//	DishesDataStore.Current.Dishes.Add(newDish);
-		//}
+			DishesDataStore.Current.Dishes.Add(newDish);
+		}
 
 		//public void JoinDishes(IEnumerable<Dishes> joinDishes)
 		//{
