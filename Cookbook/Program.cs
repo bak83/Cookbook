@@ -2,6 +2,7 @@ using Cookbook;
 using Cookbook.Mapper;
 using Cookbook.Services;
 using Microsoft.EntityFrameworkCore;
+using Cookbook.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(typeof(DishMapper));
@@ -15,9 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-//builder.Services.AddDbContext<DbCookBookContext>(
-//	dbContextOptions => dbContextOptions.UseSqlite(
-//		builder.Configuration["ConnectionStrings:CookBookDBConnectionString"]));
+builder.Services.AddDbContext<CookBookDbContext>();
 
 var app = builder.Build();
 

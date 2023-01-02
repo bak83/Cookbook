@@ -1,15 +1,35 @@
 ﻿//using Cookbook.Models;
+using AutoMapper;
 using Cookbook.Entities;
+using Cookbook.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cookbook.Services
 {
 	public class DishRepositiry : IDishRepositiry
 	{
-		public IEnumerable<Dishes> GetDishes()
-		{
-			return DishesDataStore.Current.Dishes;
-		}
+		private readonly IMapper _mapper;
+		private readonly CookBookDbContext _dbContext;
 
+		public DishRepositiry(IMapper mapper, CookBookDbContext dbContext)
+		{
+			_mapper = mapper;
+			_dbContext = dbContext;
+		}
+		
+		public IEnumerable<DishDto> GetDishes()
+		{
+			var dishes = _dbContext
+				.Dishes
+				.Include(a => a.Ingredients)
+				.Include(a => a.KindOfDiet)
+				.Include(a => a.KindOfDishes)
+				.ToList();
+			//var DishesDto = _mapper.Map<List<DishDto>>(DishesDataStore.Current.Dishes);
+			var DishesDto = _mapper.Map<List<DishDto>>(dishes);
+
+			return DishesDto;
+		}
 		public Dishes GetDish(int id)
 		{
 

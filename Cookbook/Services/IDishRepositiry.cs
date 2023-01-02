@@ -9,7 +9,7 @@ namespace Cookbook.Services
 	{
 		void AddNewDish(Dishes dishAdd);
 		Dishes GetDish(int id);
-		IEnumerable<Dishes> GetDishes();
+		IEnumerable<DishDto> GetDishes();
 		void JoinDishes(IEnumerable<int> joinDishes, string Name, KindOfDiet kindOfDiet, KindOfDishes kindOfDishes, IEnumerable<Ingredients> ingredients = null);
 	}
 }

@@ -23,9 +23,9 @@ namespace Cookbook.Controllers
 		[HttpGet]
 		public ActionResult<IEnumerable<DishDto>> GetDishes()
 		{
-			var dishesList = _dishRepositiry.GetDishes();
+			var result = _dishRepositiry.GetDishes();
 			
-			return Ok(_mapper.Map<IEnumerable<DishDto>>(dishesList));
+			return Ok(result);
 		}
 
 		[HttpGet("{id}")]
