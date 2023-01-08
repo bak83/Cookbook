@@ -7,9 +7,10 @@ namespace Cookbook.Services
 {
 	public interface IDishRepositiry
 	{
-		void AddNewDish(Dishes dishAdd);
-		Dishes GetDish(int id);
+		int AddNewDish(DishAddDto dishAddDto);
+		DishDto GetDish(int id);
+		//IEnumerable<DishDto> GetDishByIngredients(List<string> ListOfIngredients);
 		IEnumerable<DishDto> GetDishes();
-		void JoinDishes(IEnumerable<int> joinDishes, string Name, KindOfDiet kindOfDiet, KindOfDishes kindOfDishes, IEnumerable<Ingredients> ingredients = null);
+		//void JoinDishes(JoinDishDto joinDishes, ICollection<int> ListOfDishes);
 	}
 }

@@ -1,6 +1,6 @@
 ﻿namespace Cookbook.Models
 {
-	public class JoinDishDto
+	public class JoinDishDto : IDishAddDto
 	{
 		public string Name { get; set; } = string.Empty;
 

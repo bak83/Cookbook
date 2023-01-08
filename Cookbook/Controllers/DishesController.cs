@@ -34,21 +34,28 @@ namespace Cookbook.Controllers
 
 			var dish = _dishRepositiry.GetDish(id);
 
-			if (dish == null)
-			{
-				return NotFound();
-			}
-
-			return Ok(_mapper.Map<DishDto>(dish));
+			return Ok(dish);
 		}
+
+		//[HttpGet("Ingredients")]
+		//public ActionResult<DishDto> GetDishByIngredients([FromBody]List<string> listOfIngredients)
+		//{
+
+		//	var dish = _dishRepositiry.GetDishByIngredients(listOfIngredients);
+
+		//	if (dish == null)
+		//	{
+		//		return NotFound();
+		//	}
+
+		//	return Ok(dish);
+		//}
 
 		[HttpPost]
 		public ActionResult<DishDto> AddNewDish(DishAddDto dishAdd)
 		{
-			var result = _mapper.Map<Entities.Dishes>(dishAdd);
-			_dishRepositiry.AddNewDish(result);
-
-			return Ok();
+			var result = _dishRepositiry.AddNewDish(dishAdd);
+			return Created($"api/dishes/{result}", null); ;
 		}
 
 		[HttpPost("join")]
@@ -59,7 +66,7 @@ namespace Cookbook.Controllers
 			var kindOfDiet = _mapper.Map<Entities.KindOfDiet>(joinDishes.KindOfDiet);
 			var kindOfDishes = _mapper.Map<Entities.KindOfDishes>(joinDishes.KindOfDishes);
 			var igredients = _mapper.Map<IEnumerable<Entities.Ingredients>>(joinDishes.Ingredients);
-			_dishRepositiry.JoinDishes(joinDish, Name, kindOfDiet, kindOfDishes, igredients);
+			//_dishRepositiry.JoinDishes(joinDishes, joinDish);
 			return Ok();
 		}
 

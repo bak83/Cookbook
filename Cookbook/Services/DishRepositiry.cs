@@ -1,8 +1,10 @@
 ﻿//using Cookbook.Models;
 using AutoMapper;
 using Cookbook.Entities;
+using Cookbook.Exceptions;
 using Cookbook.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Cookbook.Services
 {
@@ -10,13 +12,15 @@ namespace Cookbook.Services
 	{
 		private readonly IMapper _mapper;
 		private readonly CookBookDbContext _dbContext;
+		private readonly ILogger<DishRepositiry> _logger;
 
-		public DishRepositiry(IMapper mapper, CookBookDbContext dbContext)
+		public DishRepositiry(IMapper mapper, CookBookDbContext dbContext, ILogger<DishRepositiry> logger)
 		{
 			_mapper = mapper;
 			_dbContext = dbContext;
+			_logger = logger;
 		}
-		
+
 		public IEnumerable<DishDto> GetDishes()
 		{
 			var dishes = _dbContext
@@ -25,48 +29,70 @@ namespace Cookbook.Services
 				.Include(a => a.KindOfDiet)
 				.Include(a => a.KindOfDishes)
 				.ToList();
-			//var DishesDto = _mapper.Map<List<DishDto>>(DishesDataStore.Current.Dishes);
+			
 			var DishesDto = _mapper.Map<List<DishDto>>(dishes);
 
 			return DishesDto;
 		}
-		public Dishes GetDish(int id)
+		public DishDto GetDish(int id)
 		{
-
-			var dish = DishesDataStore.Current.Dishes
+			var dish = _dbContext
+				.Dishes
+				.Include(a => a.Ingredients)
+				.Include(a => a.KindOfDiet)
+				.Include(a => a.KindOfDishes)
 				.FirstOrDefault(c => c.Id == id);
 
-			return dish;
+			if (dish is null)
+				throw new NotFoundExcteption("Dish not found");
+
+			var result = _mapper.Map<DishDto>(dish);
+			return result;
 		}
 
-		public void AddNewDish(Dishes dishAdd)
+		//public IEnumerable<DishDto> GetDishByIngredients(List<string> ListOfIngredients)
+		//{
+		//	var newListOfDishes = new List<Ingredients>();
+
+		//	foreach (var elem in ListOfIngredients)
+		//	{
+		//		newListOfDishes.Append(_dbContext
+		//			.Ingredients
+		//			.Include(a => a.Dishes)
+		//			.Where(l => l.Name.ToLower().Contains(elem.ToLower()))
+		//			//.Where(a => ListOfIngredients == null || (a.Name.ToLower().Contains(ListOfIngredients.ToLower())
+		//			//								|| a.Name.ToLower().Contains(ListOfIngredients.ToLower())))
+		//			.ToList();)
+		//	}
+		//	var result = _mapper.Map<List<DishDto>>(newListOfDishes);
+		//	return result;
+		//}
+
+		public int AddNewDish(DishAddDto dishAddDto)
 		{
-
-			var maxDishId = DishesDataStore.Current.Dishes.Max(p => p.Id);
-
-			var newDish = new Dishes()
-			{
-				Id = ++maxDishId,
-				Name = dishAdd.Name,
-				KindOfDiet = dishAdd.KindOfDiet,
-				KindOfDishes = dishAdd.KindOfDishes,
-				Ingredients = dishAdd.Ingredients
-			};
-
-			DishesDataStore.Current.Dishes.Add(newDish);
-		}
-
-		public void JoinDishes(IEnumerable<int> joinDishes, string Name, KindOfDiet kindOfDiet, KindOfDishes kindOfDishes, IEnumerable<Ingredients> ingredients = null)
-		{
-			var existsDishes = DishesDataStore.Current.Dishes;
-			var maxDishId = existsDishes.Max(p => p.Id);
-			var existsDishesList = new List<Dishes>();
-
-			foreach (var dish in joinDishes)
-			{
-				existsDishesList.Add(DishesDataStore.Current.Dishes.FirstOrDefault(c => c.Id == dish));
-
+			var dish = _mapper.Map<Entities.Dishes>(dishAddDto);
+			if (dishAddDto.ListOfDishes.IsNullOrEmpty())
+			{				
+				_dbContext.Dishes.Add(dish);
+				_dbContext.SaveChanges();
 			}
+			else
+			{
+				JoinDishes(dishAddDto);
+			}
+
+			return dish.Id;
+		}
+
+		public void JoinDishes(DishAddDto joinDishes)
+		{
+			var existsDishesList = _dbContext
+				.Dishes
+				.Include(a => a.Ingredients)
+				.Include(a => a.KindOfDiet)
+				.Include(a => a.KindOfDishes)
+				.Where(x => joinDishes.ListOfDishes.Contains(x.Id))
+				.ToList();
 
 			var Ingredients = new List<Ingredients>();
 			string elem = null;
@@ -87,21 +113,25 @@ namespace Cookbook.Services
 					);
 				elem = null;
 			}
-			if (ingredients != null)
+			
+			var Name = joinDishes.Name;
+			var kindOfDiet = _mapper.Map<Entities.KindOfDiet>(joinDishes.KindOfDiet);
+			var kindOfDishes = _mapper.Map<Entities.KindOfDishes>(joinDishes.KindOfDishes);
+			var igredients = _mapper.Map<List<Entities.Ingredients>>(joinDishes.Ingredients);
+			if (igredients != null)
 			{
-				Ingredients.AddRange(ingredients);
+				Ingredients.AddRange(igredients);
 			}
 			var newDish = new Dishes()
 			{
-
-				Id = ++maxDishId,
 				Name = Name,
 				KindOfDiet = kindOfDiet,
 				KindOfDishes = kindOfDishes,
 				Ingredients = Ingredients
 			};
 
-			DishesDataStore.Current.Dishes.Add(newDish);
+			_dbContext.Dishes.Add(newDish);
+			_dbContext.SaveChanges();
 		}
 	}
 }
