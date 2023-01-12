@@ -7,5 +7,7 @@ namespace Cookbook.Entities
 	{
 		public int Id { get; set; }
 		public string kindOfDiet { get; set; }
+		public Dishes Dishes { get; set; }
+		public int DishesId { get; set; }
 	}
 }

@@ -16,5 +16,22 @@ namespace Cookbook.Entities
 		{
 			optionsBuilder.UseSqlServer(_connectionString);
 		}
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<Ingredients>(i =>
+			{
+				i.HasOne(c => c.Dishes)
+				.WithMany(a => a.Ingredients)
+				.HasForeignKey(c => c.DishesId);
+
+
+			});
+
+			//modelBuilder.Entity<User>()
+			//	.HasOne(u => u.Address)
+			//	.WithOne(a => a.User)
+			//	.HasForeignKey<Address>(a => a.UserId);
+		}
 	}
 }
