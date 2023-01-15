@@ -50,24 +50,6 @@ namespace Cookbook.Services
 			return result;
 		}
 
-		//public IEnumerable<DishDto> GetDishByIngredients(List<string> ListOfIngredients)
-		//{
-		//	var newListOfDishes = new List<Ingredients>();
-
-		//	foreach (var elem in ListOfIngredients)
-		//	{
-		//		newListOfDishes.Append(_dbContext
-		//			.Ingredients
-		//			.Include(a => a.Dishes)
-		//			.Where(l => l.Name.ToLower().Contains(elem.ToLower()))
-		//			//.Where(a => ListOfIngredients == null || (a.Name.ToLower().Contains(ListOfIngredients.ToLower())
-		//			//								|| a.Name.ToLower().Contains(ListOfIngredients.ToLower())))
-		//			.ToList();)
-		//	}
-		//	var result = _mapper.Map<List<DishDto>>(newListOfDishes);
-		//	return result;
-		//}
-
 		public int AddNewDish(DishAddDto dishAddDto)
 		{
 			var dish = _mapper.Map<Entities.Dishes>(dishAddDto);
@@ -93,6 +75,9 @@ namespace Cookbook.Services
 				.Include(a => a.KindOfDishes)
 				.Where(x => joinDishes.ListOfDishes.Contains(x.Id))
 				.ToList();
+
+			if (existsDishesList.Count() == 0)
+				throw new NotFoundExcteption("Dish not found");
 
 			var Ingredients = new List<Ingredients>();
 			string elem = null;

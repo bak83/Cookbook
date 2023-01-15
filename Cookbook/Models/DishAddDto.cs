@@ -2,7 +2,7 @@
 
 namespace Cookbook.Models
 {
-	public class DishAddDto : IDishAddDto
+	public class DishAddDto
 	{
 		public string Name { get; set; } = string.Empty;
 

@@ -9,8 +9,6 @@ namespace Cookbook.Services
 	{
 		int AddNewDish(DishAddDto dishAddDto);
 		DishDto GetDish(int id);
-		//IEnumerable<DishDto> GetDishByIngredients(List<string> ListOfIngredients);
 		IEnumerable<DishDto> GetDishes();
-		//void JoinDishes(JoinDishDto joinDishes, ICollection<int> ListOfDishes);
 	}
 }
