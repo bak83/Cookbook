@@ -8,6 +8,7 @@ namespace Cookbook.Services
 	public interface IDishRepositiry
 	{
 		int AddNewDish(DishAddDto dishAddDto);
+		void Delete(int id);
 		DishDto GetDish(int id);
 		IEnumerable<DishDto> GetDishes();
 	}

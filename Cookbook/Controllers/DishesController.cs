@@ -44,5 +44,11 @@ namespace Cookbook.Controllers
 			var result = _dishRepositiry.AddNewDish(dishAdd);
 			return Created($"api/dishes/{result}", null); ;
 		}
+
+		[HttpDelete("{id}")]
+		public void DeleteDish(int id)
+		{
+			_dishRepositiry.Delete(id);
+		}
 	}
 }

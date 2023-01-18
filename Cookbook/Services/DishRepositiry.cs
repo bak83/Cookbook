@@ -66,6 +66,21 @@ namespace Cookbook.Services
 			return dish.Id;
 		}
 
+		public void Delete(int id)
+		{
+			var dish = _dbContext
+				.Dishes
+				//.Include(a => a.Ingredients)
+				//.Include(a => a.KindOfDiet)
+				//.Include(a => a.KindOfDishes)
+				.FirstOrDefault(c => c.Id == id);
+
+			if (dish is null)
+				throw new NotFoundExcteption("Dish not found");
+			_dbContext.Dishes.Remove(dish);
+			_dbContext.SaveChanges();
+		}
+
 		public void JoinDishes(DishAddDto joinDishes)
 		{
 			var existsDishesList = _dbContext
